@@ -10,9 +10,9 @@
     ],
     'assets': {
         'point_of_sale.assets':
-            ['mrl_hr_receipt/static/src/xml/OrderReceipt.xml',
-            'mrl_hr_receipt/static/src/js/OrderReceipt.js',
-            #'mrl_hr_receipt/static/src/js/mlr_hr_receipt.js'
+            ['mlr_hr_receipt/static/src/xml/OrderReceipt.xml',
+            'mlr_hr_receipt/static/src/js/OrderReceipt.js',
+            #'mlr_hr_receipt/static/src/js/mlr_hr_receipt.js'
             ],
     },
     "installable": True,
