@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="viewcustom_employee" model="ir.ui.view">
+        <field name="name">viewcustom.employee</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='identification_group']" position="inside">
+                <field name="employee_ln_address" string="Tipping Lightning Address"/>
+                <field name="employee_ln_qr_image" widget="image" options="{'size': [300, 300]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
