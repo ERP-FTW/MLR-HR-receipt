@@ -7,33 +7,21 @@ from odoo.exceptions import ValidationError
 class PosSession(models.Model):
     _inherit = 'pos.session'
 
-#    def _loader_params_hr_employee(self):
-#        return {'search_params': {'fields':'employee_ln_address'}}
-
-#    def _pos_ui_hr_employee(self, params):
-#        return self.env['hr.employee'].search_read(**params['search_params'])
-
     def _loader_params_hr_employee(self):
-        result = super()._loader_params_hr_employee()
-        result['search_params']['fields'].append('employee_ln_address')
-        return result
+        return {
+            'search_params': {
+                'domain': [('user_id', '=', self.env.user.id)],
+                'fields': ['employee_ln_address','employee_ln_qr_image'],
+            },
+        }
+
+    def _get_pos_ui_hr_employee(self, params):
+        result = super()._pos_ui_models_to_load()
+        employee = self.env['hr.employee'].search_read(**params['search_params'])[0]
+        return employee
 
     def _pos_ui_models_to_load(self):
         result = super()._pos_ui_models_to_load()
         new_models_to_load = ['hr.employee']
         result.extend(new_models_to_load)
         return result
-#
-#    def _loader_params_pos_payment(self):
-#        return {
-#            'search_params': {
-#                'domain': [],
-#                'fields':
-#                    ['name',
-#                    'employee_ln_address', 'employee_ln_qr_image'
-#                    ],
-#            },
-#        }
-#
-#    def _get_pos_ui_pos_payment(self, params):
-#        return self.env['hr.employee'].search_read(**params['search_params'])
