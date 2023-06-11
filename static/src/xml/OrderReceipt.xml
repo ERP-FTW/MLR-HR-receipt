@@ -4,9 +4,17 @@
         <xpath expr="//div[hasclass('before-footer')]" position="after">
             <t t-if="props.isBill == False">
                 <t t-if='receipt.cashier'>
-                    <div>Tip your waitstaff:
+                    <span class="pos-receipt-center-align">
+                        <div>----------------------------</div>
+                        <br/>
+                        <div class="pos-receipt-title">Tip your waitstaff in Lightning</div>
+                    </span>
+                    <div>LN address:
                         <t t-esc='receipt.employee_ln_address'/>
                     </div>
+                        <img t-if="receipt.employee_ln_qr" t-att-src="receipt.employee_ln_qr" width="300"/>
+                    <div class="pos-receipt-title">Powered by MI Lightning Rod</div>
+                        <div class="pos-receipt-title">www.MILightningRod.com</div>
                 </t>
             </t>
         </xpath>
