@@ -1,24 +1,19 @@
-/**@odoo-module */
-import { PosGlobalState } from 'point_of_sale.models';
-import Registries from 'point_of_sale.Registries';
-const HRPosGlobalState = (PosGlobalState) => class HRPosGlobalState extends PosGlobalState{
-    async _processData(loadedData) {
+odoo.define('custom_pos_receipt.models', function(require) {
+    "use strict";
 
-    await super._processData(...arguments);
-        this.employees = loadedData['hr.employee'];
-        this.employee_by_id = loadedData['employee_by_id'];
-        this.employee_ln_address = loadedData['employee_ln_address'];
-
-        console.log(this.employees);
-        var employee_ln_address = this.employees[0].employee_ln_address;
-        console.log(employee_ln_address);
+var { Order } = require('point_of_sale.models');
+var Registries = require('point_of_sale.Registries');
 
 
-        this.employee_ln_address = loadedData['hr.employee'];
-        //console.log(this.employee_ln_address);
-
-//get_employee_ln_address() {
-//    return this.employees[0].employee_ln_address;}
+    const CustomOrder = (Order) => class CustomOrder extends Order {
+        export_for_printing() {
+            var result = super.export_for_printing(...arguments);
+            result.employee_ln_address = this.pos.employee_ln_address;
+            result.employee_ln_qr=this.pos.employee_ln_qr;
+            result.employee_ln_qr_image=this.pos.employee_ln_qr_image;
+            console.log(result);
+            return result;
+        }
     }
-}
-Registries.Model.extend(PosGlobalState, HRPosGlobalState);
+    Registries.Model.extend(Order, CustomOrder);
+});
