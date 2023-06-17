@@ -7,20 +7,11 @@ from odoo.exceptions import ValidationError
 class PosSession(models.Model):
     _inherit = 'pos.session'
 
+
+
     def _loader_params_hr_employee(self):
-        return {
-            'search_params': {
-                'domain': [('user_id', '=', self.env.user.id)],
-                'fields': ['employee_ln_address','employee_ln_qr_image'],
-            },
-        }
-
-    def _get_pos_ui_hr_employee(self, params):
-        employee = self.env['hr.employee'].search_read(**params['search_params'])[0]
-        return employee
-
-    def _pos_ui_models_to_load(self):
-        result = super()._pos_ui_models_to_load()
-        new_models_to_load = ['hr.employee']
-        result.extend(new_models_to_load)
-        return result
+        if len(self.config_id.employee_ids) > 0:
+            domain = ['&', ('company_id', '=', self.config_id.company_id.id), '|', ('user_id', '=', self.user_id.id), ('id', 'in', self.config_id.employee_ids.ids)]
+        else:
+            domain = [('company_id', '=', self.config_id.company_id.id)]
+        return {'search_params': {'domain': domain, 'fields': ['name', 'id', 'user_id','employee_ln_address','employee_ln_qr_image'], 'load': False}}
