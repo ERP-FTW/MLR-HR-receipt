@@ -6,7 +6,7 @@
                 <t t-if='receipt.cashier'>
                     <div>Tip your waitstaff:
                         <t t-esc='receipt.employee_ln_address'/>
-                        <img class="pos-receipt-logo" t-att-src="receipt.employee_ln_address_qr" alt="Qr Code"/>
+                        <img class="pos-receipt-logo" t-attf-src="data:image/jpeg;base64,#{receipt.employee_ln_qr_image}" />
                     </div>
                 </t>
             </t>
