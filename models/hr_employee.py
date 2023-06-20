@@ -8,7 +8,7 @@ import lnurl
 class custom_info(models.Model):
 
     _inherit = 'hr.employee'
-    employee_ln_address = fields.Char(string="Employee lightning address : ", required=False)
+    employee_ln_address = fields.Char(string="Employee lightning address : ", required=False, default="sagar@zbd.gg")
     employee_ln_qr_image = fields.Image(compute="_compute_ln_qr_image",string="Employee lightning QR code")
 
 
