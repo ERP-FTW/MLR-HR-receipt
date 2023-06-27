@@ -22,14 +22,3 @@ class PosSession(models.Model):
         result['search_params']['fields'].extend(['employee_ln_address', 'employee_ln_qr_image'])
 
         return result
-
-    def _get_pos_ui_hr_employee(self, params):
-        employees=super()._get_pos_ui_hr_employee(params)
-  
-        print('Calling from pos_session hr_employee')
-
-        for employee in employees:
-            print(type(employee))
-            employee.compute_ln_qr_image()
-
-        return employees
