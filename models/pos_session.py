@@ -8,10 +8,28 @@ class PosSession(models.Model):
     _inherit = 'pos.session'
 
 
+    def _pos_ui_models_to_load(self):
+        result = super()._pos_ui_models_to_load()
+        new_model = 'hr.employee'
+        if new_model not in result:
+            result.append(new_model)
+        return result
 
     def _loader_params_hr_employee(self):
-        if len(self.config_id.employee_ids) > 0:
-            domain = ['&', ('company_id', '=', self.config_id.company_id.id), '|', ('user_id', '=', self.user_id.id), ('id', 'in', self.config_id.employee_ids.ids)]
-        else:
-            domain = [('company_id', '=', self.config_id.company_id.id)]
-        return {'search_params': {'domain': domain, 'fields': ['name', 'id', 'user_id','employee_ln_address','employee_ln_qr_image'], 'load': False}}
+        result= super()._loader_params_hr_employee()
+        if not self.config_id.module_pos_hr:
+            result['search_params']['domain']=[('user_id', '=', self.env.user.id)]
+        result['search_params']['fields'].extend(['employee_ln_address', 'employee_ln_qr_image'])
+
+        return result
+
+    def _get_pos_ui_hr_employee(self, params):
+        employees=super()._get_pos_ui_hr_employee(params)
+  
+        print('Calling from pos_session hr_employee')
+
+        for employee in employees:
+            print(type(employee))
+            employee.compute_ln_qr_image()
+
+        return employees

@@ -12,6 +12,7 @@
         'point_of_sale.assets':
             ['MLR-HR-receipt-main/static/src/xml/OrderReceipt.xml',
              'MLR-HR-receipt-main/static/src/js/ln_address.js',
+             'MLR-HR-receipt-main/static/src/js/models.js',
             ],
     },
     "installable": True,

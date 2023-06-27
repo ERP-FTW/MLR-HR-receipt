@@ -4,10 +4,12 @@
         <xpath expr="//div[hasclass('before-footer')]" position="after">
             <t t-if="props.isBill == False">
                 <t t-if='receipt.cashier'>
+                 <t t-if='receipt.employee_ln_address'>
                     <div>Tip your waitstaff:
                         <t t-esc='receipt.employee_ln_address'/>
                         <img class="pos-receipt-logo" t-attf-src="data:image/jpeg;base64,#{receipt.employee_ln_qr_image}" />
                     </div>
+                 </t>
                 </t>
             </t>
         </xpath>
