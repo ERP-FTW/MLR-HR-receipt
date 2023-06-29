@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="//group[@name='identification_group']" position="inside">
                 <field name="employee_ln_address" string="Tipping Lightning Address"/>
+                <field name="avatar_in_ln_qr" string="Display Avatar in LN QR?"/>
                 <field name="employee_ln_qr_image" widget="image" options="{'size': [300, 300]}"/>
             </xpath>
         </field>
